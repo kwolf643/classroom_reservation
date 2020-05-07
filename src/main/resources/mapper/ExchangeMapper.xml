@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cdut.classroom_reservation.dao.ExchangeMapper">
+  <resultMap id="BaseResultMap" type="com.cdut.classroom_reservation.entity.Exchange">
+    <id column="exchange_id" jdbcType="INTEGER" property="exchangeId" />
+    <result column="reservation_id" jdbcType="INTEGER" property="reservationId" />
+    <result column="ex_c_id" jdbcType="VARCHAR" property="exCId" />
+    <result column="ex_date" jdbcType="DATE" property="exDate" />
+    <result column="ex_time" jdbcType="INTEGER" property="exTime" />
+    <result column="ex_u_id" jdbcType="INTEGER" property="exUId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    exchange_id, reservation_id, ex_c_id, ex_date, ex_time, ex_u_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_exchange
+    where exchange_id = #{exchangeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_exchange
+    where exchange_id = #{exchangeId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cdut.classroom_reservation.entity.Exchange">
+    insert into tb_exchange (exchange_id, reservation_id, ex_c_id, 
+      ex_date, ex_time, ex_u_id)
+    values (#{exchangeId,jdbcType=INTEGER}, #{reservationId,jdbcType=INTEGER}, #{exCId,jdbcType=VARCHAR}, 
+      #{exDate,jdbcType=DATE}, #{exTime,jdbcType=INTEGER}, #{exUId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cdut.classroom_reservation.entity.Exchange">
+    insert into tb_exchange
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="exchangeId != null">
+        exchange_id,
+      </if>
+      <if test="reservationId != null">
+        reservation_id,
+      </if>
+      <if test="exCId != null">
+        ex_c_id,
+      </if>
+      <if test="exDate != null">
+        ex_date,
+      </if>
+      <if test="exTime != null">
+        ex_time,
+      </if>
+      <if test="exUId != null">
+        ex_u_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="exchangeId != null">
+        #{exchangeId,jdbcType=INTEGER},
+      </if>
+      <if test="reservationId != null">
+        #{reservationId,jdbcType=INTEGER},
+      </if>
+      <if test="exCId != null">
+        #{exCId,jdbcType=VARCHAR},
+      </if>
+      <if test="exDate != null">
+        #{exDate,jdbcType=DATE},
+      </if>
+      <if test="exTime != null">
+        #{exTime,jdbcType=INTEGER},
+      </if>
+      <if test="exUId != null">
+        #{exUId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cdut.classroom_reservation.entity.Exchange">
+    update tb_exchange
+    <set>
+      <if test="reservationId != null">
+        reservation_id = #{reservationId,jdbcType=INTEGER},
+      </if>
+      <if test="exCId != null">
+        ex_c_id = #{exCId,jdbcType=VARCHAR},
+      </if>
+      <if test="exDate != null">
+        ex_date = #{exDate,jdbcType=DATE},
+      </if>
+      <if test="exTime != null">
+        ex_time = #{exTime,jdbcType=INTEGER},
+      </if>
+      <if test="exUId != null">
+        ex_u_id = #{exUId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where exchange_id = #{exchangeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cdut.classroom_reservation.entity.Exchange">
+    update tb_exchange
+    set reservation_id = #{reservationId,jdbcType=INTEGER},
+      ex_c_id = #{exCId,jdbcType=VARCHAR},
+      ex_date = #{exDate,jdbcType=DATE},
+      ex_time = #{exTime,jdbcType=INTEGER},
+      ex_u_id = #{exUId,jdbcType=INTEGER}
+    where exchange_id = #{exchangeId,jdbcType=INTEGER}
+  </update>
+</mapper>
