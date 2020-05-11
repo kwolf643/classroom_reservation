@@ -185,6 +185,24 @@
     <if test="date != null">
       and date = #{date,jdbcType=DATE}
     </if>
+    order by classroom_id asc,date desc
     limit #{curPage,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <select id="checkOpen" parameterType="com.cdut.classroom_reservation.entity.Reservation" resultType="java.lang.Integer">
+    select  count(*)
+    from tb_classroom
+    where  open_status = 1
+    and classroom_id = #{cRId,jdbcType=VARCHAR}
+    and date = #{rDate,jdbcType=DATE}
+  </select>
+
+  <select id="checkClassroom" parameterType="com.cdut.classroom_reservation.entity.Reservation" resultType="java.lang.Integer">
+    select  count(*)
+    from tb_classroom
+    where  open_status = 1
+    and classroom_id = #{cRId,jdbcType=VARCHAR}
+    and date = #{rDate,jdbcType=DATE}
+    and time#{rTime,jdbcType=INTEGER} = '空闲'
   </select>
 </mapper>

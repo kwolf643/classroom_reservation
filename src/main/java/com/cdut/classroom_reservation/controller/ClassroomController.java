@@ -15,7 +15,7 @@ import java.util.Date;
 
 @Controller
 public class ClassroomController {
-    private static Logger log= LoggerFactory.getLogger(UserController.class);
+    private static Logger log= LoggerFactory.getLogger(ClassroomController.class);
 
     @Autowired
     private ClassroomService classroomService;

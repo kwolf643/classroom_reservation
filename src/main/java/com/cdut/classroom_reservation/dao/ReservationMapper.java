@@ -1,7 +1,10 @@
 package com.cdut.classroom_reservation.dao;
 
 import com.cdut.classroom_reservation.entity.Reservation;
+import com.cdut.classroom_reservation.result.gReservation;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface ReservationMapper {
@@ -16,4 +19,11 @@ public interface ReservationMapper {
     int updateByPrimaryKeySelective(Reservation record);
 
     int updateByPrimaryKey(Reservation record);
+
+    //预约列表
+    List<Reservation> selectByIdAndDate(gReservation reservation);
+
+    //预约总数
+    int  getTotal(gReservation reservation);
 }
+

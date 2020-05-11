@@ -1,6 +1,7 @@
 package com.cdut.classroom_reservation.dao;
 
 import com.cdut.classroom_reservation.entity.Classroom;
+import com.cdut.classroom_reservation.entity.Reservation;
 import com.cdut.classroom_reservation.result.gClassroom;
 import org.springframework.stereotype.Repository;
 
@@ -25,4 +26,10 @@ public interface ClassroomMapper {
 
     //教室资源总数
     int  getTotal(gClassroom classroom);
+
+    //教室是否开放
+    int checkOpen(Reservation reservation);
+
+    //教室资源检查
+    int checkClassroom(Reservation reservation);
 }
