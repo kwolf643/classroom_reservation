@@ -103,4 +103,14 @@
       phone = #{phone,jdbcType=CHAR}
     where user_id = #{userId,jdbcType=CHAR}
   </update>
+
+  <!--  根据用户id和密码登录-->
+  <select id="login_check" parameterType="com.cdut.classroom_reservation.entity.User" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_user
+    where user_id = #{userId,jdbcType=CHAR}
+    and password = #{password,jdbcType=VARCHAR}
+  </select>
+
 </mapper>

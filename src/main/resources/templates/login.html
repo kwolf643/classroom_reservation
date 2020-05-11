@@ -6,14 +6,14 @@
     <script src="./js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript">
         function login() {
-            // 获取输入的用户名和密码
-            var username = $("#username").val();
+            // 获取输入的用户id和密码
+            var userId = $("#userId").val();
             var password = $("#password").val();
             $.ajax({
                 url: "/login",
                 type: "post",
                 // data表示发送的数据
-                data: JSON.stringify({username: username, password: password}),
+                data: JSON.stringify({userId: userId, password: password}),
                 // 定义发送请求的数据格式为JSON字符串
                 contentType: "application/json;charset=UTF-8",
                 //定义回调响应的数据格式为JSON字符串,该属性可以省略
@@ -23,7 +23,7 @@
                     if (map != null) {
                         //alert("login success!");
                         alert(map.msg);
-                        window.location.href="/userinfo";
+                        window.location.href="/hello";
                     }
                 }
             });
@@ -33,7 +33,7 @@
 </head>
 <body>
 <form>
-    用户名：<input type="text" name="username" id="username"><br/>
+    用户id：<input type="text" name="userId" id="userId"><br/>
     密&nbsp;&nbsp;&nbsp;码：<input type="password" name="password" id="password"><br/>
     <input type="button" value="登录" onclick="login()"/>
 </form>

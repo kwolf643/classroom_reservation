@@ -77,11 +77,13 @@
 
         <!--配置表映射文件:tableName数据库表的名称；生成的class的名称：domainObjectName-->
         <!-- 用户表 -->
+        <!--
         <table tableName="tb_user" domainObjectName="User"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
         </table>
+        -->
         <!--教室资源表 -->
         <!--
         <table tableName="tb_classroom" domainObjectName="Classroom"
@@ -92,13 +94,13 @@
         -->
 
         <!-- 预约信息表 -->
-        <!--
+
         <table tableName="tb_reservation" domainObjectName="Reservation"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
         </table>
-        -->
+
 
         <!-- 调换信息表 -->
         <!--

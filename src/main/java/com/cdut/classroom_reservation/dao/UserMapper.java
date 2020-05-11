@@ -1,7 +1,9 @@
 package com.cdut.classroom_reservation.dao;
 
 import com.cdut.classroom_reservation.entity.User;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UserMapper {
     int deleteByPrimaryKey(String userId);
 
@@ -14,4 +16,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    User login_check(User user);
 }

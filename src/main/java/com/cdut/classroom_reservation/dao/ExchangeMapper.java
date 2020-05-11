@@ -1,7 +1,9 @@
 package com.cdut.classroom_reservation.dao;
 
 import com.cdut.classroom_reservation.entity.Exchange;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ExchangeMapper {
     int deleteByPrimaryKey(Integer exchangeId);
 

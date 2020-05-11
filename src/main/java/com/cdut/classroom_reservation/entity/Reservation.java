@@ -7,7 +7,7 @@ public class Reservation {
 
     private String userId;
 
-    private String classroomId;
+    private String cRId;
 
     private Date rDate;
 
@@ -37,12 +37,12 @@ public class Reservation {
         this.userId = userId == null ? null : userId.trim();
     }
 
-    public String getClassroomId() {
-        return classroomId;
+    public String getcRId() {
+        return cRId;
     }
 
-    public void setClassroomId(String classroomId) {
-        this.classroomId = classroomId == null ? null : classroomId.trim();
+    public void setcRId(String cRId) {
+        this.cRId = cRId == null ? null : cRId.trim();
     }
 
     public Date getrDate() {

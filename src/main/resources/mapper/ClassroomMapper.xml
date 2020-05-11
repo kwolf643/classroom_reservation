@@ -2,32 +2,48 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cdut.classroom_reservation.dao.ClassroomMapper">
   <resultMap id="BaseResultMap" type="com.cdut.classroom_reservation.entity.Classroom">
-    <id column="classroom_id" jdbcType="VARCHAR" property="classroomId" />
+    <id column="sorce_id" jdbcType="INTEGER" property="sorceId" />
+    <result column="classroom_id" jdbcType="VARCHAR" property="classroomId" />
     <result column="open_status" jdbcType="INTEGER" property="openStatus" />
     <result column="addr" jdbcType="VARCHAR" property="addr" />
+    <result column="date" jdbcType="DATE" property="date" />
+    <result column="time1" jdbcType="VARCHAR" property="time1" />
+    <result column="time2" jdbcType="VARCHAR" property="time2" />
+    <result column="time3" jdbcType="VARCHAR" property="time3" />
+    <result column="time4" jdbcType="VARCHAR" property="time4" />
+    <result column="time5" jdbcType="VARCHAR" property="time5" />
+    <result column="time6" jdbcType="VARCHAR" property="time6" />
   </resultMap>
   <sql id="Base_Column_List">
-    classroom_id, open_status, addr
+    sorce_id, classroom_id, open_status, addr, date, time1, time2, time3, time4, time5, 
+    time6
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from tb_classroom
-    where classroom_id = #{classroomId,jdbcType=VARCHAR}
+    where sorce_id = #{sorceId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_classroom
-    where classroom_id = #{classroomId,jdbcType=VARCHAR}
+    where sorce_id = #{sorceId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cdut.classroom_reservation.entity.Classroom">
-    insert into tb_classroom (classroom_id, open_status, addr
-      )
-    values (#{classroomId,jdbcType=VARCHAR}, #{openStatus,jdbcType=INTEGER}, #{addr,jdbcType=VARCHAR}
-      )
+    insert into tb_classroom (sorce_id, classroom_id, open_status, 
+      addr, date, time1, time2, 
+      time3, time4, time5, 
+      time6)
+    values (#{sorceId,jdbcType=INTEGER}, #{classroomId,jdbcType=VARCHAR}, #{openStatus,jdbcType=INTEGER}, 
+      #{addr,jdbcType=VARCHAR}, #{date,jdbcType=DATE}, #{time1,jdbcType=VARCHAR}, #{time2,jdbcType=VARCHAR}, 
+      #{time3,jdbcType=VARCHAR}, #{time4,jdbcType=VARCHAR}, #{time5,jdbcType=VARCHAR}, 
+      #{time6,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.cdut.classroom_reservation.entity.Classroom">
     insert into tb_classroom
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sorceId != null">
+        sorce_id,
+      </if>
       <if test="classroomId != null">
         classroom_id,
       </if>
@@ -37,8 +53,32 @@
       <if test="addr != null">
         addr,
       </if>
+      <if test="date != null">
+        date,
+      </if>
+      <if test="time1 != null">
+        time1,
+      </if>
+      <if test="time2 != null">
+        time2,
+      </if>
+      <if test="time3 != null">
+        time3,
+      </if>
+      <if test="time4 != null">
+        time4,
+      </if>
+      <if test="time5 != null">
+        time5,
+      </if>
+      <if test="time6 != null">
+        time6,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sorceId != null">
+        #{sorceId,jdbcType=INTEGER},
+      </if>
       <if test="classroomId != null">
         #{classroomId,jdbcType=VARCHAR},
       </if>
@@ -48,24 +88,103 @@
       <if test="addr != null">
         #{addr,jdbcType=VARCHAR},
       </if>
+      <if test="date != null">
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="time1 != null">
+        #{time1,jdbcType=VARCHAR},
+      </if>
+      <if test="time2 != null">
+        #{time2,jdbcType=VARCHAR},
+      </if>
+      <if test="time3 != null">
+        #{time3,jdbcType=VARCHAR},
+      </if>
+      <if test="time4 != null">
+        #{time4,jdbcType=VARCHAR},
+      </if>
+      <if test="time5 != null">
+        #{time5,jdbcType=VARCHAR},
+      </if>
+      <if test="time6 != null">
+        #{time6,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.cdut.classroom_reservation.entity.Classroom">
     update tb_classroom
     <set>
+      <if test="classroomId != null">
+        classroom_id = #{classroomId,jdbcType=VARCHAR},
+      </if>
       <if test="openStatus != null">
         open_status = #{openStatus,jdbcType=INTEGER},
       </if>
       <if test="addr != null">
         addr = #{addr,jdbcType=VARCHAR},
       </if>
+      <if test="date != null">
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="time1 != null">
+        time1 = #{time1,jdbcType=VARCHAR},
+      </if>
+      <if test="time2 != null">
+        time2 = #{time2,jdbcType=VARCHAR},
+      </if>
+      <if test="time3 != null">
+        time3 = #{time3,jdbcType=VARCHAR},
+      </if>
+      <if test="time4 != null">
+        time4 = #{time4,jdbcType=VARCHAR},
+      </if>
+      <if test="time5 != null">
+        time5 = #{time5,jdbcType=VARCHAR},
+      </if>
+      <if test="time6 != null">
+        time6 = #{time6,jdbcType=VARCHAR},
+      </if>
     </set>
-    where classroom_id = #{classroomId,jdbcType=VARCHAR}
+    where sorce_id = #{sorceId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.cdut.classroom_reservation.entity.Classroom">
     update tb_classroom
-    set open_status = #{openStatus,jdbcType=INTEGER},
-      addr = #{addr,jdbcType=VARCHAR}
-    where classroom_id = #{classroomId,jdbcType=VARCHAR}
+    set classroom_id = #{classroomId,jdbcType=VARCHAR},
+      open_status = #{openStatus,jdbcType=INTEGER},
+      addr = #{addr,jdbcType=VARCHAR},
+      date = #{date,jdbcType=DATE},
+      time1 = #{time1,jdbcType=VARCHAR},
+      time2 = #{time2,jdbcType=VARCHAR},
+      time3 = #{time3,jdbcType=VARCHAR},
+      time4 = #{time4,jdbcType=VARCHAR},
+      time5 = #{time5,jdbcType=VARCHAR},
+      time6 = #{time6,jdbcType=VARCHAR}
+    where sorce_id = #{sorceId,jdbcType=INTEGER}
   </update>
+
+  <select id="getTotal" parameterType="com.cdut.classroom_reservation.result.gClassroom" resultType="java.lang.Integer">
+    select count(*)
+    from tb_classroom
+    where  sorce_id is not null
+    <if test="classroomId != null">
+      and classroom_id like concat(#{classroomId,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="date != null">
+      and date = #{date,jdbcType=DATE}
+    </if>
+  </select>
+
+  <select id="selectByIdAndDate" parameterType="com.cdut.classroom_reservation.result.gClassroom" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_classroom
+    where  sorce_id is not null
+    <if test="classroomId != null">
+      and classroom_id like  concat(#{classroomId,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="date != null">
+      and date = #{date,jdbcType=DATE}
+    </if>
+    limit #{curPage,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
 </mapper>

@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.cdut.classroom_reservation.entity.Reservation">
     <id column="reservation_id" jdbcType="INTEGER" property="reservationId" />
     <result column="user_id" jdbcType="CHAR" property="userId" />
-    <result column="classroom_id" jdbcType="VARCHAR" property="classroomId" />
+    <result column="c_r_id" jdbcType="VARCHAR" property="cRId" />
     <result column="r_date" jdbcType="DATE" property="rDate" />
     <result column="r_time" jdbcType="INTEGER" property="rTime" />
     <result column="r_type" jdbcType="VARCHAR" property="rType" />
@@ -13,8 +13,7 @@
     <result column="r_status" jdbcType="INTEGER" property="rStatus" />
   </resultMap>
   <sql id="Base_Column_List">
-    reservation_id, user_id, classroom_id, r_date, r_time, r_type, r_phone, remarks, 
-    r_status
+    reservation_id, user_id, c_r_id, r_date, r_time, r_type, r_phone, remarks, r_status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -27,10 +26,10 @@
     where reservation_id = #{reservationId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.cdut.classroom_reservation.entity.Reservation">
-    insert into tb_reservation (reservation_id, user_id, classroom_id, 
+    insert into tb_reservation (reservation_id, user_id, c_r_id, 
       r_date, r_time, r_type, r_phone, 
       remarks, r_status)
-    values (#{reservationId,jdbcType=INTEGER}, #{userId,jdbcType=CHAR}, #{classroomId,jdbcType=VARCHAR}, 
+    values (#{reservationId,jdbcType=INTEGER}, #{userId,jdbcType=CHAR}, #{cRId,jdbcType=VARCHAR}, 
       #{rDate,jdbcType=DATE}, #{rTime,jdbcType=INTEGER}, #{rType,jdbcType=VARCHAR}, #{rPhone,jdbcType=CHAR}, 
       #{remarks,jdbcType=VARCHAR}, #{rStatus,jdbcType=INTEGER})
   </insert>
@@ -43,8 +42,8 @@
       <if test="userId != null">
         user_id,
       </if>
-      <if test="classroomId != null">
-        classroom_id,
+      <if test="cRId != null">
+        c_r_id,
       </if>
       <if test="rDate != null">
         r_date,
@@ -72,8 +71,8 @@
       <if test="userId != null">
         #{userId,jdbcType=CHAR},
       </if>
-      <if test="classroomId != null">
-        #{classroomId,jdbcType=VARCHAR},
+      <if test="cRId != null">
+        #{cRId,jdbcType=VARCHAR},
       </if>
       <if test="rDate != null">
         #{rDate,jdbcType=DATE},
@@ -101,8 +100,8 @@
       <if test="userId != null">
         user_id = #{userId,jdbcType=CHAR},
       </if>
-      <if test="classroomId != null">
-        classroom_id = #{classroomId,jdbcType=VARCHAR},
+      <if test="cRId != null">
+        c_r_id = #{cRId,jdbcType=VARCHAR},
       </if>
       <if test="rDate != null">
         r_date = #{rDate,jdbcType=DATE},
@@ -128,7 +127,7 @@
   <update id="updateByPrimaryKey" parameterType="com.cdut.classroom_reservation.entity.Reservation">
     update tb_reservation
     set user_id = #{userId,jdbcType=CHAR},
-      classroom_id = #{classroomId,jdbcType=VARCHAR},
+      c_r_id = #{cRId,jdbcType=VARCHAR},
       r_date = #{rDate,jdbcType=DATE},
       r_time = #{rTime,jdbcType=INTEGER},
       r_type = #{rType,jdbcType=VARCHAR},

@@ -1,7 +1,9 @@
 package com.cdut.classroom_reservation.dao;
 
 import com.cdut.classroom_reservation.entity.Reservation;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ReservationMapper {
     int deleteByPrimaryKey(Integer reservationId);
 

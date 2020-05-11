@@ -1,17 +1,28 @@
 package com.cdut.classroom_reservation.dao;
 
 import com.cdut.classroom_reservation.entity.Classroom;
+import com.cdut.classroom_reservation.result.gClassroom;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
+@Repository
 public interface ClassroomMapper {
-    int deleteByPrimaryKey(String classroomId);
+    int deleteByPrimaryKey(Integer sorceId);
 
     int insert(Classroom record);
 
     int insertSelective(Classroom record);
 
-    Classroom selectByPrimaryKey(String classroomId);
+    Classroom selectByPrimaryKey(Integer sorceId);
 
     int updateByPrimaryKeySelective(Classroom record);
 
     int updateByPrimaryKey(Classroom record);
+
+    //教室列表
+    List<Classroom> selectByIdAndDate(gClassroom classroom);
+
+    //教室资源总数
+    int  getTotal(gClassroom classroom);
 }

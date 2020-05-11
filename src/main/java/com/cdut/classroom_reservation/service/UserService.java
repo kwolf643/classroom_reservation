@@ -1,11 +1,11 @@
 package com.cdut.classroom_reservation.service;
 
 import com.cdut.classroom_reservation.entity.User;
+import com.cdut.classroom_reservation.result.Result;
 
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 
 public interface UserService {
     //登录函数
-    Map<String, String> login(User user, HttpSession session);
+    Result login(User user, HttpSession session);
 }
