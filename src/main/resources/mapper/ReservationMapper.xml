@@ -140,12 +140,18 @@
   <select id="getTotal" parameterType="com.cdut.classroom_reservation.result.gReservation" resultType="java.lang.Integer">
     select count(*)
     from tb_reservation
-    where  user_id = #{userId,jdbcType=CHAR}
+    where  reservation_id is not null
     <if test="cRId != null">
-      and c_r_id like concat(#{cRId,jdbcType=VARCHAR},'%')
+      and c_r_id like concat('%',#{cRId,jdbcType=VARCHAR},'%')
     </if>
     <if test="rDate != null">
       and r_date = #{rDate,jdbcType=DATE}
+    </if>
+    <if test="rStatus != 0">
+      and r_status = #{rStatus,jdbcType=INTEGER}
+    </if>
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=CHAR}
     </if>
   </select>
 
@@ -153,14 +159,29 @@
     select
     <include refid="Base_Column_List" />
     from tb_reservation
-    where  user_id = #{userId,jdbcType=CHAR}
+    where  reservation_id is not null
     <if test="cRId != null">
-      and c_r_id like concat(#{cRId,jdbcType=VARCHAR},'%')
+      and c_r_id like concat('%',#{cRId,jdbcType=VARCHAR},'%')
     </if>
     <if test="rDate != null">
       and r_date = #{rDate,jdbcType=DATE}
     </if>
-    order by r_status,r_date asc ,reservation_id desc
+    <if test="rStatus != 0">
+      and r_status = #{rStatus,jdbcType=INTEGER}
+    </if>
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=CHAR}
+    </if>
+    order by r_status asc,reservation_id desc
     limit #{curPage,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
   </select>
+
+  <update id="updateStatus" parameterType="com.cdut.classroom_reservation.entity.Reservation">
+    update tb_reservation
+    set  r_status = #{rStatus,jdbcType=INTEGER}
+    where reservation_id = #{reservationId,jdbcType=INTEGER}
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=CHAR}
+    </if>
+  </update>
 </mapper>

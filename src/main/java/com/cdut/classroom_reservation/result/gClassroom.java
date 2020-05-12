@@ -20,8 +20,17 @@ public class gClassroom {
 
     private Date date;
 
+    private int openStatus;
+
     private List<Classroom> data;
 
+    public Integer getOpenStatus() {
+        return openStatus;
+    }
+
+    public void setOpenStatus(Integer openStatus) {
+        this.openStatus = openStatus;
+    }
 
     public int getCurPage() {
         return curPage;

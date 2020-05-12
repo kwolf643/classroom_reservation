@@ -22,8 +22,17 @@ public class gReservation {
 
     private Date rDate;
 
+    private int rStatus;
+
     private List<Reservation> data;
 
+    public Integer getrStatus() {
+        return rStatus;
+    }
+
+    public void setrStatus(Integer rStatus) {
+        this.rStatus = rStatus;
+    }
 
     public int getCurPage() {
         return curPage;

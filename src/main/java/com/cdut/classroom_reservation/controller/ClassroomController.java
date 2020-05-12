@@ -26,10 +26,12 @@ public class ClassroomController {
     public gClassroom getClassroom(@RequestParam(name = "curPage") int curPage,
                                    @RequestParam(name = "pageSize") int pageSize,
                                    @RequestParam(name = "classroomId") String classroomId,
-                                   @RequestParam(name = "date")  String  date) throws ParseException {
+                                   @RequestParam(name = "date")  String  date,
+                                   @RequestParam(name = "openStatus")  int  openStatus) throws ParseException {
         gClassroom classroom=new gClassroom();
         classroom.setCurPage(curPage);
         classroom.setPageSize(pageSize);
+        classroom.setOpenStatus(openStatus);
         if (!classroomId.equals("")){classroom.setClassroomId(classroomId);}
         if (!date.equals("")){
             String TimeStart = date.replace("Z", " UTC");

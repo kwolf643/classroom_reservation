@@ -165,12 +165,15 @@
   <select id="getTotal" parameterType="com.cdut.classroom_reservation.result.gClassroom" resultType="java.lang.Integer">
     select count(*)
     from tb_classroom
-    where  sorce_id is not null
+    where  date > CURRENT_DATE
     <if test="classroomId != null">
-      and classroom_id like concat(#{classroomId,jdbcType=VARCHAR},'%')
+      and classroom_id like concat('%',#{classroomId,jdbcType=VARCHAR},'%')
     </if>
     <if test="date != null">
       and date = #{date,jdbcType=DATE}
+    </if>
+    <if test="openStatus != 3">
+      and open_status = #{openStatus,jdbcType=INTEGER}
     </if>
   </select>
 
@@ -178,12 +181,15 @@
     select
     <include refid="Base_Column_List" />
     from tb_classroom
-    where  sorce_id is not null
+    where  date > CURRENT_DATE
     <if test="classroomId != null">
-      and classroom_id like  concat(#{classroomId,jdbcType=VARCHAR},'%')
+      and classroom_id like  concat('%',#{classroomId,jdbcType=VARCHAR},'%')
     </if>
     <if test="date != null">
       and date = #{date,jdbcType=DATE}
+    </if>
+    <if test="openStatus != 3">
+      and open_status = #{openStatus,jdbcType=INTEGER}
     </if>
     order by classroom_id asc,date desc
     limit #{curPage,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
@@ -205,4 +211,18 @@
     and date = #{rDate,jdbcType=DATE}
     and time#{rTime,jdbcType=INTEGER} = '空闲'
   </select>
+
+  <update id="updateTime" parameterType="com.cdut.classroom_reservation.entity.Reservation">
+    update tb_classroom
+    set time#{rTime,jdbcType=INTEGER} = '已占'
+    where classroom_id = #{cRId,jdbcType=VARCHAR}
+    and date = #{rDate,jdbcType=DATE}
+  </update>
+
+  <update id="updateTime1" parameterType="com.cdut.classroom_reservation.entity.Reservation">
+    update tb_classroom
+    set time#{rTime,jdbcType=INTEGER} = '空闲'
+    where classroom_id = #{cRId,jdbcType=VARCHAR}
+    and date = #{rDate,jdbcType=DATE}
+  </update>
 </mapper>

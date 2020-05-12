@@ -35,7 +35,10 @@ public class ClassroomServiceImpl implements ClassroomService {
         int total = classroomMapper.getTotal(classroom);
 
         List<Classroom> re = classroomMapper.selectByIdAndDate(classroom);
-
+        for(int i=0;i<re.size();i++)
+        {
+            re.get(i).setOpenStatus1(re.get(i).getOpenStatus());
+        }
         gClassroom reclassroom =new gClassroom();
         reclassroom.setTotal(total);
         reclassroom.setData(re);

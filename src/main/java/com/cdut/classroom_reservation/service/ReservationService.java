@@ -10,4 +10,16 @@ public interface ReservationService {
 
     //查询预约
     gReservation getReservation(gReservation reservation);
+
+    //更新预约
+    Result updateReserve(Reservation reservation);
+
+    //撤回申请
+    Result changeStatus4(Reservation reservation);
+
+    //拒绝申请
+    Result changeStatus3(Reservation reservation);
+
+    //通过申请
+    Result changeStatus2(Reservation reservation);
 }

@@ -2,8 +2,10 @@ package com.cdut.classroom_reservation.service.Impl;
 
 import com.cdut.classroom_reservation.dao.ClassroomMapper;
 import com.cdut.classroom_reservation.dao.ReservationMapper;
+import com.cdut.classroom_reservation.dao.UserMapper;
 import com.cdut.classroom_reservation.entity.Classroom;
 import com.cdut.classroom_reservation.entity.Reservation;
+import com.cdut.classroom_reservation.entity.User;
 import com.cdut.classroom_reservation.result.Result;
 import com.cdut.classroom_reservation.result.ResultFactory;
 import com.cdut.classroom_reservation.result.gReservation;
@@ -24,6 +26,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Autowired
     private ClassroomMapper classroomMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     //预约申请
     @Override
@@ -54,6 +59,9 @@ public class ReservationServiceImpl implements ReservationService {
         {
             re.get(i).setrTime1(re.get(i).getrTime());
             re.get(i).setrStatus1(re.get(i).getrStatus());
+            User user = userMapper.selectByPrimaryKey(re.get(i).getUserId());
+            re.get(i).setUsername(user.getUsername());
+            re.get(i).setIdentity(user.getIdentity());
         }
 
         gReservation rereservation =new gReservation();
@@ -62,13 +70,53 @@ public class ReservationServiceImpl implements ReservationService {
         return  rereservation;
     }
 
+    //更新预约
+    @Override
+    public Result updateReserve(Reservation reservation) {
+        if(classroomMapper.checkOpen(reservation)==0){return ResultFactory.buildFailResult("教室不存在或教室资源已锁定！");}
+        else if(classroomMapper.checkClassroom(reservation)==0){return ResultFactory.buildFailResult("教室已被预约");}
+        else if(reservationMapper.updateByPrimaryKeySelective(reservation)!=0){
+            return ResultFactory.buildSuccessResult("预约已更新,请等待管理员审核！",null);
+        }
+        else return ResultFactory.buildFailResult("更新失败，请重试！");
+    }
 
+    //撤回
+    @Override
+    public Result changeStatus4(Reservation reservation) {
+        int status = reservationMapper.updateStatus(reservation);
+        if(status!=0){
+            Reservation reservation1 = reservationMapper.selectByPrimaryKey(reservation.getReservationId());
+            int state = classroomMapper.updateTime1(reservation1);
+            if(state!=0){
+                return ResultFactory.buildSuccessResult("已撤回！",null);
+            }
+            else return ResultFactory.buildFailResult("撤回失败，请重试！");
+        }
+        else return ResultFactory.buildFailResult("撤回失败，请重试！");
+    }
 
+    //预约失败
+    @Override
+    public Result changeStatus3(Reservation reservation) {
+        int status = reservationMapper.updateStatus(reservation);
+        if(status!=0){return ResultFactory.buildSuccessResult("已拒绝！",null);}
+        else return ResultFactory.buildFailResult("网络错误，请重试！");
+    }
 
-    public void reserveCheck(Reservation reservation) {
-        Classroom classroom = new Classroom();
-        classroom.setClassroomId(reservation.getcRId());
-        classroom.setDate(reservation.getrDateformat());
+    //预约通过
+    @Override
+    public Result changeStatus2(Reservation reservation) {
+        int status = reservationMapper.updateStatus(reservation);
+        if(status!=0){
+            Reservation reservation1 = reservationMapper.selectByPrimaryKey(reservation.getReservationId());
+            int state = classroomMapper.updateTime(reservation1);
+            if(state!=0){
+                return ResultFactory.buildSuccessResult("已通过！",null);
+            }
+            else return ResultFactory.buildFailResult("网络错误，请重试！");
+        }
+        else return ResultFactory.buildFailResult("网络错误，请重试！");
     }
 
 }

@@ -10,6 +10,8 @@ public class Classroom {
 
     private Integer openStatus;
 
+    private Integer openStatus1;
+
     private String addr;
 
     private Date date;
@@ -42,15 +44,22 @@ public class Classroom {
         this.classroomId = classroomId == null ? null : classroomId.trim();
     }
 
-    public String getOpenStatus() {
-        if (openStatus==0){return "已锁定";}
-        else return "开放预约" ;
+    public Integer getOpenStatus() {
+        return openStatus;
     }
 
     public void setOpenStatus(Integer openStatus) {
         this.openStatus = openStatus;
     }
 
+    public String getOpenStatus1() {
+        if (openStatus1==0){return "已锁定";}
+        else return "开放预约" ;
+    }
+
+    public void setOpenStatus1(Integer openStatus) {
+        this.openStatus1 = openStatus;
+    }
     public String getAddr() {
         return addr;
     }
@@ -69,6 +78,9 @@ public class Classroom {
         this.date = date;
     }
 
+    public Date getDateFormat() {
+        return date;
+    }
 
 
     public String getTime1() {

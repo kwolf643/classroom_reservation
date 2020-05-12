@@ -12,6 +12,10 @@ public class Reservation {
 
     private String userId;
 
+    private String username;
+
+    private Integer identity;
+
     private String cRId;
 
     private Date rDate;
@@ -46,6 +50,24 @@ public class Reservation {
         this.userId = userId == null ? null : userId.trim();
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
+    }
+
+    public String getIdentity() {
+        if(identity==1){ return "管理员";}
+        if(identity==2){ return "老师";}
+        else return "学生";
+    }
+
+    public void setIdentity(Integer identity) {
+        this.identity = identity;
+    }
+
     public String getcRId() {
         return cRId;
     }
@@ -59,13 +81,12 @@ public class Reservation {
         String date = format.format(rDate);
         return  date;
     }
-
-    public Date getrDateformat() {
+    public Date getrDateFormat() {
         return rDate;
     }
 
-    public void setrDate(Date rDate) {
-        this.rDate = rDate;
+    public void setrDate(Date date) {
+        this.rDate = date;
     }
 
     public Integer getrTime(){return rTime;}
@@ -122,7 +143,8 @@ public class Reservation {
     public String getrStatus1() {
         if(rStatus==1){return "审核中";}
         else if(rStatus==2){return "预约成功";}
-        else if(rStatus==3){return "预约失败";}
+        else if(rStatus==3){return "未通过";}
+        else if(rStatus==4){return "已撤回";}
         else return null;
     }
 

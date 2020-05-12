@@ -25,5 +25,8 @@ public interface ReservationMapper {
 
     //预约总数
     int  getTotal(gReservation reservation);
+
+    //改变状态
+    int updateStatus(Reservation reservation);
 }
 

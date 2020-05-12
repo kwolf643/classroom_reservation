@@ -32,4 +32,10 @@ public interface ClassroomMapper {
 
     //教室资源检查
     int checkClassroom(Reservation reservation);
+
+    //预约情况上传
+    int updateTime(Reservation reservation);
+
+    //撤回情况上传
+    int updateTime1(Reservation reservation);
 }
