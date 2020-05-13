@@ -94,13 +94,13 @@
         -->
 
         <!-- 预约信息表 -->
-
-        <table tableName="tb_reservation" domainObjectName="Reservation"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
-
+        <!--
+                <table tableName="tb_reservation" domainObjectName="Reservation"
+                       enableCountByExample="false" enableUpdateByExample="false"
+                       enableDeleteByExample="false" enableSelectByExample="false"
+                       selectByExampleQueryId="false">
+                </table>
+        -->
 
         <!-- 调换信息表 -->
         <!--
@@ -112,12 +112,12 @@
          -->
 
         <!-- 反馈信息表 -->
-        <!--
+
         <table tableName="tb_feedback" domainObjectName="Feedback"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
         </table>
-        -->
+
     </context>
 </generatorConfiguration>

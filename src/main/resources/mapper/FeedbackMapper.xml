@@ -8,9 +8,10 @@
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="f_status" jdbcType="INTEGER" property="fStatus" />
     <result column="f_date" jdbcType="DATE" property="fDate" />
+    <result column="f_phone" jdbcType="CHAR" property="fPhone" />
   </resultMap>
   <sql id="Base_Column_List">
-    feedback_id, user_id, topic, content, f_status, f_date
+    feedback_id, user_id, topic, content, f_status, f_date, f_phone
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,11 +25,11 @@
   </delete>
   <insert id="insert" parameterType="com.cdut.classroom_reservation.entity.Feedback">
     insert into tb_feedback (feedback_id, user_id, topic, 
-      content, f_status, f_date
-      )
+      content, f_status, f_date, 
+      f_phone)
     values (#{feedbackId,jdbcType=INTEGER}, #{userId,jdbcType=CHAR}, #{topic,jdbcType=VARCHAR}, 
-      #{content,jdbcType=VARCHAR}, #{fStatus,jdbcType=INTEGER}, #{fDate,jdbcType=DATE}
-      )
+      #{content,jdbcType=VARCHAR}, #{fStatus,jdbcType=INTEGER}, #{fDate,jdbcType=DATE}, 
+      #{fPhone,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.cdut.classroom_reservation.entity.Feedback">
     insert into tb_feedback
@@ -51,6 +52,9 @@
       <if test="fDate != null">
         f_date,
       </if>
+      <if test="fPhone != null">
+        f_phone,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="feedbackId != null">
@@ -70,6 +74,9 @@
       </if>
       <if test="fDate != null">
         #{fDate,jdbcType=DATE},
+      </if>
+      <if test="fPhone != null">
+        #{fPhone,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -91,6 +98,9 @@
       <if test="fDate != null">
         f_date = #{fDate,jdbcType=DATE},
       </if>
+      <if test="fPhone != null">
+        f_phone = #{fPhone,jdbcType=CHAR},
+      </if>
     </set>
     where feedback_id = #{feedbackId,jdbcType=INTEGER}
   </update>
@@ -100,7 +110,36 @@
       topic = #{topic,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       f_status = #{fStatus,jdbcType=INTEGER},
-      f_date = #{fDate,jdbcType=DATE}
+      f_date = #{fDate,jdbcType=DATE},
+      f_phone = #{fPhone,jdbcType=CHAR}
     where feedback_id = #{feedbackId,jdbcType=INTEGER}
   </update>
+
+  <select id="getTotal" parameterType="com.cdut.classroom_reservation.result.gFeedback" resultType="java.lang.Integer">
+    select count(*)
+    from tb_feedback
+    where  feedback_id is not null
+    <if test="fDate != null">
+      and f_date = #{fDate,jdbcType=DATE}
+    </if>
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=CHAR}
+    </if>
+  </select>
+
+  <select id="selectByIdAndDate" parameterType="com.cdut.classroom_reservation.result.gFeedback" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_feedback
+    where  feedback_id is not null
+    <if test="fDate != null">
+      and f_date = #{fDate,jdbcType=DATE}
+    </if>
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=CHAR}
+    </if>
+    order by f_date desc
+    limit #{curPage,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+
 </mapper>

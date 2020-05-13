@@ -1,5 +1,6 @@
 package com.cdut.classroom_reservation.entity;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Feedback {
@@ -14,6 +15,12 @@ public class Feedback {
     private Integer fStatus;
 
     private Date fDate;
+
+    private String fPhone;
+
+    private String username;
+
+    private Integer identity;
 
     public Integer getFeedbackId() {
         return feedbackId;
@@ -55,11 +62,39 @@ public class Feedback {
         this.fStatus = fStatus;
     }
 
-    public Date getfDate() {
-        return fDate;
+    public String getfDate() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String date = format.format(fDate);
+        return  date;
     }
 
     public void setfDate(Date fDate) {
         this.fDate = fDate;
+    }
+
+    public String getfPhone() {
+        return fPhone;
+    }
+
+    public void setfPhone(String fPhone) {
+        this.fPhone = fPhone == null ? null : fPhone.trim();
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
+    }
+
+    public String getIdentity() {
+        if(identity==1){ return "管理员";}
+        if(identity==2){ return "老师";}
+        else return "学生";
+    }
+
+    public void setIdentity(Integer identity) {
+        this.identity = identity;
     }
 }

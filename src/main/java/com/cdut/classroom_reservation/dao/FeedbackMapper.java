@@ -1,7 +1,10 @@
 package com.cdut.classroom_reservation.dao;
 
 import com.cdut.classroom_reservation.entity.Feedback;
+import com.cdut.classroom_reservation.result.gFeedback;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface FeedbackMapper {
@@ -16,4 +19,10 @@ public interface FeedbackMapper {
     int updateByPrimaryKeySelective(Feedback record);
 
     int updateByPrimaryKey(Feedback record);
+
+    //反馈总数
+    int getTotal(gFeedback feedback);
+
+    //反馈列表
+    List<Feedback> selectByIdAndDate(gFeedback feedback);
 }
