@@ -25,4 +25,10 @@ public interface FeedbackMapper {
 
     //反馈列表
     List<Feedback> selectByIdAndDate(gFeedback feedback);
+
+    //删除反馈
+    int deleteByPrimaryKeyAndUserId(Feedback feedback);
+
+    //反馈处理
+    int changeStauts(Feedback feedback);
 }

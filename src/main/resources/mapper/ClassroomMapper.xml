@@ -225,4 +225,11 @@
     where classroom_id = #{cRId,jdbcType=VARCHAR}
     and date = #{rDate,jdbcType=DATE}
   </update>
+
+  <update id="updateStatus" parameterType="com.cdut.classroom_reservation.entity.Classroom">
+    update tb_classroom
+    set open_status = #{openStatus,jdbcType=INTEGER}
+    where classroom_id = #{classroomId,jdbcType=VARCHAR}
+    and date between #{date,jdbcType=DATE} and #{date2,jdbcType=DATE}
+  </update>
 </mapper>

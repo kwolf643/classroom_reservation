@@ -3,6 +3,7 @@ package com.cdut.classroom_reservation.controller;
 import com.cdut.classroom_reservation.entity.Feedback;
 import com.cdut.classroom_reservation.entity.User;
 import com.cdut.classroom_reservation.result.Result;
+import com.cdut.classroom_reservation.result.ResultFactory;
 import com.cdut.classroom_reservation.result.gFeedback;
 import com.cdut.classroom_reservation.service.FeedbackService;
 import org.slf4j.Logger;
@@ -51,7 +52,7 @@ public class FeedbackController {
         //从session中直接获得  用户ID
         HttpSession session=request.getSession();
         User user = (User) session.getAttribute("USER_SESSION");
-        feedback.setuserId(user.getUserId());
+        if(user.getIdentity()!=1){feedback.setuserId(user.getUserId());}
 
         gFeedback feedback1=feedbackService.getFeedback(feedback);
         return feedback1;
@@ -69,7 +70,7 @@ public class FeedbackController {
         feedback.setTopic(topic);
         feedback.setfPhone(fPhone);
 
-        //状态置为1：已阅
+        //状态置为0：待查看
         feedback.setfStatus(0);
 
         //获取当前时间
@@ -94,15 +95,35 @@ public class FeedbackController {
         Feedback feedback = new Feedback();
         feedback.setFeedbackId(feedbackId);
 
-
         //从session中直接获得  用户ID 用于验证
         HttpSession session=request.getSession();
         User user = (User) session.getAttribute("USER_SESSION");
-        feedback.setUserId(user.getUserId());
+        if(user.getIdentity()!=1){feedback.setUserId(user.getUserId());}
 
         Result result = feedbackService.deleteFeedback(feedback);
         return  result;
 
     }
 
+    //反馈处理
+    @GetMapping("/changeFeedback")
+    @ResponseBody
+    public Result changeFeedback(@RequestParam(name = "feedbackId") int feedbackId, HttpServletRequest request) throws ParseException {
+        //从前端获取数据
+        Feedback feedback = new Feedback();
+        feedback.setFeedbackId(feedbackId);
+
+        //状态置为1：已阅
+        feedback.setfStatus(1);
+
+        //从session中获得身份，同学和老师无权限
+        HttpSession session=request.getSession();
+        User user = (User) session.getAttribute("USER_SESSION");
+        if(user.getIdentity()==2){return ResultFactory.buildFailResult("老师，您没有权限！");}
+        if(user.getIdentity()==3){return ResultFactory.buildFailResult("同学，您没有权限！");}
+
+        Result result = feedbackService.changeFeedback(feedback);
+        return  result;
+
+    }
 }

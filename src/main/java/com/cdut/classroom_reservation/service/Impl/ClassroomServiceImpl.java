@@ -2,6 +2,8 @@ package com.cdut.classroom_reservation.service.Impl;
 
 import com.cdut.classroom_reservation.dao.ClassroomMapper;
 import com.cdut.classroom_reservation.entity.Classroom;
+import com.cdut.classroom_reservation.result.Result;
+import com.cdut.classroom_reservation.result.ResultFactory;
 import com.cdut.classroom_reservation.result.gClassroom;
 import com.cdut.classroom_reservation.service.ClassroomService;
 import org.slf4j.Logger;
@@ -38,10 +40,20 @@ public class ClassroomServiceImpl implements ClassroomService {
         for(int i=0;i<re.size();i++)
         {
             re.get(i).setOpenStatus1(re.get(i).getOpenStatus());
+            re.get(i).setDate2(re.get(i).getDateFormat());
         }
         gClassroom reclassroom =new gClassroom();
         reclassroom.setTotal(total);
         reclassroom.setData(re);
         return  reclassroom;
+    }
+
+    @Override
+    public Result updateStatus(Classroom classroom) {
+        int state = classroomMapper.updateStatus(classroom);
+        if(state!=0){
+            return ResultFactory.buildSuccessResult("操作成功！",null);
+        }
+        else return ResultFactory.buildFailResult("操作失败，请重试！");
     }
 }

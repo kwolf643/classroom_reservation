@@ -16,6 +16,8 @@ public class Classroom {
 
     private Date date;
 
+    private Date date2;
+
     private String time1;
 
     private String time2;
@@ -76,6 +78,16 @@ public class Classroom {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getDate2() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String a = format.format(date2);
+        return  a;
+    }
+
+    public void setDate2(Date date2) {
+        this.date2 = date2;
     }
 
     public Date getDateFormat() {

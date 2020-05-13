@@ -138,8 +138,23 @@
     <if test="userId != null">
       and user_id = #{userId,jdbcType=CHAR}
     </if>
-    order by f_date desc
+    order by f_date desc,f_status asc
     limit #{curPage,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
   </select>
+
+  <delete id="deleteByPrimaryKeyAndUserId" parameterType="java.lang.Integer">
+    delete from tb_feedback
+    where feedback_id = #{feedbackId,jdbcType=INTEGER}
+    <if test="userId != null">
+      and user_id = #{userId,jdbcType=CHAR}
+    </if>
+  </delete>
+
+  <update id="changeStauts" parameterType="com.cdut.classroom_reservation.entity.Feedback">
+    update tb_feedback
+    set
+      f_status = #{fStatus,jdbcType=INTEGER}
+    where feedback_id = #{feedbackId,jdbcType=INTEGER}
+  </update>
 
 </mapper>

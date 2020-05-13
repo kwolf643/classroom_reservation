@@ -13,4 +13,7 @@ public interface FeedbackService {
 
     //撤回反馈
     Result deleteFeedback(Feedback feedback);
+
+    //处理反馈
+    Result changeFeedback(Feedback feedback);
 }

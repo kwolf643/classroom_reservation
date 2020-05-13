@@ -65,6 +65,20 @@ public class FeedbackServiceImpl implements FeedbackService {
     //撤回反馈
     @Override
     public Result deleteFeedback(Feedback feedback) {
-        return null;
+        int state = feedbackMapper.deleteByPrimaryKeyAndUserId(feedback);
+        if (state !=0){
+            return ResultFactory.buildSuccessResult("撤回成功!",null);
+        }
+        else return ResultFactory.buildFailResult("撤回失败，请重试！");
+    }
+
+    //处理反馈
+    @Override
+    public Result changeFeedback(Feedback feedback) {
+        int state = feedbackMapper.changeStauts(feedback);
+        if (state !=0){
+            return ResultFactory.buildSuccessResult("处理成功!",null);
+        }
+        else return ResultFactory.buildFailResult("处理失败，请重试！");
     }
 }

@@ -38,4 +38,7 @@ public interface ClassroomMapper {
 
     //撤回情况上传
     int updateTime1(Reservation reservation);
+
+    //教室资源状态管理
+    int updateStatus(Classroom classroom);
 }
