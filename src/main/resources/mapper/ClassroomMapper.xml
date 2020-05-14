@@ -232,4 +232,12 @@
     where classroom_id = #{classroomId,jdbcType=VARCHAR}
     and date between #{date,jdbcType=DATE} and #{date2,jdbcType=DATE}
   </update>
+
+  <select id="selectByclassroomid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_classroom
+    where classroom_id = #{classroomId,jdbcType=VARCHAR}
+    limit 1
+  </select>
 </mapper>

@@ -41,4 +41,7 @@ public interface ClassroomMapper {
 
     //教室资源状态管理
     int updateStatus(Classroom classroom);
+
+    //教室名称查询
+    Classroom selectByclassroomid(String classroomId);
 }

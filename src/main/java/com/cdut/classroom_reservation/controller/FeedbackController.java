@@ -6,6 +6,7 @@ import com.cdut.classroom_reservation.result.Result;
 import com.cdut.classroom_reservation.result.ResultFactory;
 import com.cdut.classroom_reservation.result.gFeedback;
 import com.cdut.classroom_reservation.service.FeedbackService;
+import com.cdut.classroom_reservation.service.IMailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

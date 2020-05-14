@@ -9,6 +9,7 @@ import com.cdut.classroom_reservation.entity.User;
 import com.cdut.classroom_reservation.result.Result;
 import com.cdut.classroom_reservation.result.ResultFactory;
 import com.cdut.classroom_reservation.result.gReservation;
+import com.cdut.classroom_reservation.service.IMailService;
 import com.cdut.classroom_reservation.service.ReservationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private IMailService mailService;
 
     //预约申请
     @Override
@@ -121,7 +125,36 @@ public class ReservationServiceImpl implements ReservationService {
         if(status!=0){
             Reservation reservation1 = reservationMapper.selectByPrimaryKey(reservation.getReservationId());
             int state = classroomMapper.updateTime(reservation1);
+            Classroom classroom = classroomMapper.selectByclassroomid(reservation1.getcRId());
             if(state!=0){
+                User user=userMapper.selectByPrimaryKey(reservation1.getUserId());
+                reservation1.setrTime1(reservation1.getrTime());
+                String content= "</h1>预约成功：<h1>\n" +
+                        "</h1>预约教室地址、时间段：<h1>\n" +
+                        "<table border=\"1\">\n" +
+                        "  <tr>\n" +
+                        "    <th>预约人</th>\n" +
+                        "    <th>预约教室</th>\n" +
+                        "    <th>预约日期</th>\n" +
+                        "    <th>预约时间段</th>\n" +
+                        "    <th>预约类型</th>\n" +
+                        "    <th>联系方式</th>\n" +
+                        "    <th>备注</th>\n" +
+                        "    <th>教室地址</th>\n" +
+                        "  </tr>\n" +
+                        "  <tr>\n" +
+                        "    <td>"+user.getUsername()+"</td>\n" +
+                        "    <td>"+reservation1.getcRId()+"</td>\n" +
+                        "    <td>"+reservation1.getrDate()+"</td>\n" +
+                        "    <td>"+reservation1.getrTime1()+"</td>\n" +
+                        "    <td>"+reservation1.getrType()+"</td>\n" +
+                        "    <td>"+reservation1.getrPhone()+"</td>\n" +
+                        "    <td>"+reservation1.getRemarks()+"</td>\n" +
+                        "    <td>"+classroom.getAddr()+"</td>\n" +
+                        "  </tr>\n" +
+                        "</table>";
+                log.debug(user.getEmail());
+                mailService.sendHtmlMail(user.getEmail(),"高校教室预约系统通知", content);
                 return ResultFactory.buildSuccessResult("已通过！",null);
             }
             else return ResultFactory.buildFailResult("网络错误，请重试！");

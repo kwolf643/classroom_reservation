@@ -17,6 +17,16 @@ spring:
       exclude: WEB-INF/**
   freemarker:
       cache: false    #\u9875\u9762\u4E0D\u52A0\u8F7D\u7F13\u5B58\uFF0C\u4FEE\u6539\u5373\u65F6\u751F\u6548
+  mail:
+    host: smtp.qq.com #发送邮件服务器
+    username: 891577030@qq.com #发送邮件的邮箱地址
+    password:  okbpmfsfdunubeei #客户端授权码，不是邮箱密码，这个在qq邮箱设置里面自动生成的
+    properties.mail.smtp.port: 465 #端口号465或587
+    from: 891577030@qq.com # 发送邮件的地址，和上面username一致
+    properties.mail.smtp.starttls.enable: true
+    properties.mail.smtp.starttls.required: true
+    properties.mail.smtp.ssl.enable: true
+    default-encoding: utf-8
 
 mybatis:
   type-aliases-package: com.cdut.classroom_reservation.entity

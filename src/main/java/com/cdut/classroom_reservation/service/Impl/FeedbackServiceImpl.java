@@ -8,6 +8,7 @@ import com.cdut.classroom_reservation.result.Result;
 import com.cdut.classroom_reservation.result.ResultFactory;
 import com.cdut.classroom_reservation.result.gFeedback;
 import com.cdut.classroom_reservation.service.FeedbackService;
+import com.cdut.classroom_reservation.service.IMailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private IMailService mailService;
 
     //反馈列表
     @Override
@@ -77,6 +81,9 @@ public class FeedbackServiceImpl implements FeedbackService {
     public Result changeFeedback(Feedback feedback) {
         int state = feedbackMapper.changeStauts(feedback);
         if (state !=0){
+            Feedback feedback1 = feedbackMapper.selectByPrimaryKey(feedback.getFeedbackId());
+            User user=userMapper.selectByPrimaryKey(feedback1.getUserId());
+            mailService.sendSimpleMail(user.getEmail(),"高校教室预约平台通知","您好，已经收到您的反馈，感谢您的建议");
             return ResultFactory.buildSuccessResult("处理成功!",null);
         }
         else return ResultFactory.buildFailResult("处理失败，请重试！");

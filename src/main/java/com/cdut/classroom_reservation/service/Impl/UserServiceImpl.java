@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService {
         else return ResultFactory.buildFailResult("登录失败，用户id或密码错误！");
     }
 
+    //修改个人信息
     @Override
     public Result update(User user) {
         int state = userMapper.updateByPrimaryKeySelective(user);
