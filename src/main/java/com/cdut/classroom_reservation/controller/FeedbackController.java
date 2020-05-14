@@ -105,6 +105,24 @@ public class FeedbackController {
 
     }
 
+    //删除反馈
+    @GetMapping("/deleteFeedbackAdmin")
+    @ResponseBody
+    public Result deleteFeedbackAdmin(@RequestParam(name = "feedbackId") int feedbackId, HttpServletRequest request) throws ParseException {
+        //从前端获取数据
+        Feedback feedback = new Feedback();
+        feedback.setFeedbackId(feedbackId);
+
+        //从session中直接获得  用户ID 用于验证
+        HttpSession session=request.getSession();
+        User user = (User) session.getAttribute("USER_SESSION");
+        if(user.getIdentity()==2){return ResultFactory.buildFailResult("老师，您没有权限！");}
+        if(user.getIdentity()==3){return ResultFactory.buildFailResult("同学，您没有权限！");}
+        Result result = feedbackService.deleteFeedback(feedback);
+        return  result;
+
+    }
+
     //反馈处理
     @GetMapping("/changeFeedback")
     @ResponseBody

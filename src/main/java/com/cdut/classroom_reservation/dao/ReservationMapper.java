@@ -28,5 +28,10 @@ public interface ReservationMapper {
 
     //改变状态
     int updateStatus(Reservation reservation);
+
+    //检查是否有人正在预约
+    int checkReservation(Reservation reservation);
+
+    int getNumber(String userId);
 }
 

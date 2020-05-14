@@ -57,6 +57,7 @@ public class ReservationController {
         HttpSession session=request.getSession();
         User user = (User) session.getAttribute("USER_SESSION");
         reservation.setUserId(user.getUserId());
+        reservation.setIdentity(user.getIdentity());
 
         //打印
         log.debug("预约人："+reservation.getUserId());
@@ -108,7 +109,7 @@ public class ReservationController {
     public Result updateReservation(@RequestParam(name = "reservationId") int reservationId,
                                  @RequestParam(name = "crid") String cRId,
                                  @RequestParam(name = "rDate") String rDate,
-                                 @RequestParam(name = "rTime") int rTime,
+                                 @RequestParam(name = "rTime") int rTime,@RequestParam(name = "rTime1") int rTime1,
                                  @RequestParam(name = "rType") String rType,
                                  @RequestParam(name = "rPhone") String rPhone,
                                  @RequestParam(name = "remarks") String remarks,HttpServletRequest request) throws ParseException {
@@ -127,6 +128,7 @@ public class ReservationController {
         reservation.setrType(rType);
         reservation.setrPhone(rPhone);
         reservation.setRemarks(remarks);
+        reservation.setrTime1(rTime1);
 
         //预约状态置为1
         reservation.setrStatus(1);
@@ -135,6 +137,7 @@ public class ReservationController {
         HttpSession session=request.getSession();
         User user = (User) session.getAttribute("USER_SESSION");
         reservation.setUserId(user.getUserId());
+        reservation.setIdentity(user.getIdentity());
 
         //打印
         log.debug("预约人："+reservation.getUserId());
@@ -166,6 +169,7 @@ public class ReservationController {
         log.debug("用户："+reservation.getUserId());
         log.debug("预约单id:"+reservation.getReservationId());
 
+
         //调用接口层函数
         Result result = reservationService.changeStatus4(reservation);
         return result;
@@ -178,7 +182,12 @@ public class ReservationController {
                                        @RequestParam(name = "pageSize") int pageSize,
                                        @RequestParam(name = "cRId") String cRId,
                                        @RequestParam(name = "rDate")  String  rDate,
-                                       @RequestParam(name = "rStatus")  int  rStatus) throws ParseException {
+                                       @RequestParam(name = "rStatus")  int  rStatus,HttpServletRequest request) throws ParseException {
+        //从session中获得身份，同学和老师无权限
+        HttpSession session=request.getSession();
+        User user = (User) session.getAttribute("USER_SESSION");
+        if(user.getIdentity()!=1){return null;}
+
         gReservation reservation=new gReservation();
         reservation.setCurPage(curPage);
         reservation.setPageSize(pageSize);

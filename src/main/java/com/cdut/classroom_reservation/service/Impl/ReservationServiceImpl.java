@@ -33,8 +33,15 @@ public class ReservationServiceImpl implements ReservationService {
     //预约申请
     @Override
     public Result reserve(Reservation reservation) {
+        if (reservation.getIdentityInt()==2){
+            if(reservationMapper.getNumber(reservation.getUserId())>=3){return ResultFactory.buildFailResult("老师，你只有 3次 有效预约或有效申请！");}
+        }
+        if (reservation.getIdentityInt()==3){
+            if(reservationMapper.getNumber(reservation.getUserId())>=1){return ResultFactory.buildFailResult("同学，你只有 1次 有效预约或有效申请！");}
+        }
         if(classroomMapper.checkOpen(reservation)==0){return ResultFactory.buildFailResult("教室不存在或教室资源已锁定！");}
         else if(classroomMapper.checkClassroom(reservation)==0){return ResultFactory.buildFailResult("教室已被预约");}
+        else if(reservationMapper.checkReservation(reservation)!=0){return ResultFactory.buildFailResult("教室已有人在预约中");}
         else if(reservationMapper.insertSelective(reservation)!=0){
             return ResultFactory.buildSuccessResult("预约已提交,请等待管理员审核！",null);
         }
@@ -75,7 +82,10 @@ public class ReservationServiceImpl implements ReservationService {
     public Result updateReserve(Reservation reservation) {
         if(classroomMapper.checkOpen(reservation)==0){return ResultFactory.buildFailResult("教室不存在或教室资源已锁定！");}
         else if(classroomMapper.checkClassroom(reservation)==0){return ResultFactory.buildFailResult("教室已被预约");}
+        else if(reservationMapper.checkReservation(reservation)!=0){return ResultFactory.buildFailResult("教室已有人在预约中");}
         else if(reservationMapper.updateByPrimaryKeySelective(reservation)!=0){
+            reservation.setrTime(reservation.getrTime1int());
+            classroomMapper.updateTime1(reservation);
             return ResultFactory.buildSuccessResult("预约已更新,请等待管理员审核！",null);
         }
         else return ResultFactory.buildFailResult("更新失败，请重试！");
@@ -118,5 +128,7 @@ public class ReservationServiceImpl implements ReservationService {
         }
         else return ResultFactory.buildFailResult("网络错误，请重试！");
     }
+
+
 
 }

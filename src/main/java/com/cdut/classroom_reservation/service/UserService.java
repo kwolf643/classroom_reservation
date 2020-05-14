@@ -8,4 +8,7 @@ import javax.servlet.http.HttpSession;
 public interface UserService {
     //登录函数
     Result login(User user, HttpSession session);
+
+    //更新用户
+    Result update(User user);
 }

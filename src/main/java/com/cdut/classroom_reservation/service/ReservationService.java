@@ -22,4 +22,5 @@ public interface ReservationService {
 
     //通过申请
     Result changeStatus2(Reservation reservation);
+
 }

@@ -64,6 +64,10 @@ public class Reservation {
         else return "学生";
     }
 
+    public Integer getIdentityInt() {
+        return identity;
+    }
+
     public void setIdentity(Integer identity) {
         this.identity = identity;
     }
@@ -107,6 +111,8 @@ public class Reservation {
     public void setrTime1(Integer rTime) {
         this.rTime1=rTime;
     }
+
+    public Integer getrTime1int(){return rTime1;}
 
     public String getrType() {
         return rType;

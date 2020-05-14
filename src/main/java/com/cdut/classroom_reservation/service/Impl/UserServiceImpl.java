@@ -32,9 +32,21 @@ public class UserServiceImpl implements UserService {
             else identity="同学";
             String msg="登录成功! 欢迎您,"+user1.getUsername()+" "+identity;
             log.debug(msg);
+            user1.setPassword("");
             return ResultFactory.buildSuccessResult(msg,user1);
         }
         else return ResultFactory.buildFailResult("登录失败，用户id或密码错误！");
+    }
+
+    @Override
+    public Result update(User user) {
+        int state = userMapper.updateByPrimaryKeySelective(user);
+        if(state!=0){
+            User user1=userMapper.selectByPrimaryKey(user.getUserId());
+            user1.setPassword("");
+            return ResultFactory.buildSuccessResult("更新成功！",user1);
+        }
+        else  return ResultFactory.buildFailResult("更新失败，请重试！");
     }
 
 }
