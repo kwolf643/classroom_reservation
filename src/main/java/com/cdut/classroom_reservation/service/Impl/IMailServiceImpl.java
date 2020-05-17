@@ -27,7 +27,7 @@ public class IMailServiceImpl implements IMailService {
     private JavaMailSender mailSender;
 
     /**
-     * 配置文件中我的qq邮箱
+     * 配置文件中的qq邮箱
      */
     @Value("${spring.mail.from}")
     private String from;
